@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<!--
+Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
+Click nbfs://nbhost/SystemFileSystem/Templates/Other/html.html to edit this template
+-->
+<html xmlns=http://www.w3.org/1999/xhtml xmlns:th="http://www.thymeleaf.org">
+    <head>
+        <title>TODO supply a title</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+            
+        <script src="https://kit.fontawesome.com/279cd13ff5.js" crossorigin="anonymous"></script>
+        
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css" integrity="sha384-xOolHFLEh07PJGoPkLv1IbcEPTNtaed2xpHsD9ESMhqIYd0nLMwNLD69Npy4HI+N" crossorigin="anonymous">
+        <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+        <script src="https://cdn.jsdelivr.net/npm/popper.js@1.12.9/dist/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+        <script src="https://code.jquery.com/jquery-3.7.0.min.js" integrity="sha256-2Pmvv0kuTBOenSvLm6bvfBSSHrUJ+3A7x6P5Ebd07/g=" crossorigin="anonymous"></script>
+
+        <link rel="stylesheet" th:href="@{/style.css}">
+        <link rel="stylesheet" th:href="@{/responsive.css}">
+    </head>
+    <body>
+        <div th:replace="headerAndFooterHomePage::header"></div>
+        
+        <!--================Main Header Area =================-->
+        <section class="banner_area">
+            <div class="container">
+                <div class="banner_text">
+                    <h3>Contact Us</h3>
+                </div>
+            </div>
+        </section>
+        <!--================End Main Header Area =================-->
+        
+        <!--================Contact Form Area =================-->
+        <section class="contact_form_area p_100">
+            <div class="container">
+                <div class="main_title">
+                    <h2>Get In Touch</h2>
+                    <h5 th:if="${success}" th:text="${success}"></h5>
+                    <h5 th:unless="${success}">Do you have anything in your mind to let us know?  
+                        Kindly don't delay to connect to us by means of our contact form.</h5>
+                </div>
+                <div class="row">
+                    <div class="col-lg-7" th:if="${session.customer}">
+                        <form class="row contact_us_form" th:method="get" id="contactForm" novalidate="novalidate"
+                              th:action="@{/sendEmailContact}">
+                            <div class="form-group col-md-6">
+                                <input type="text" th:value="${session.customer.fullname}"
+                                       class="form-control" id="name" name="name" placeholder="Your name" required>
+                            </div>
+                            <div class="form-group col-md-6">
+                                <input type="email" th:value="${session.customer.email}"
+                                       class="form-control" id="email" name="email" placeholder="Email address" required>
+                            </div>
+                            <div class="form-group col-md-12">
+                                <input type="text" class="form-control" id="subject" name="subject" 
+                                       placeholder="Subject" required>
+                            </div>
+                            <div class="form-group col-md-12">
+                                <textarea class="form-control" name="message" id="message" rows="1" 
+                                          placeholder="Wrtie message"></textarea>
+                            </div>
+                            <div class="form-group col-md-12">
+                                <button type="submit" value="submit" class="btn order_s_btn form-control">submit now</button>
+                            </div>
+                        </form>
+                    </div>
+                    <div class="col-lg-7" th:unless="${session.customer}">
+                        <form class="row contact_us_form" th:method="get" id="contactForm" novalidate="novalidate"
+                              th:action="@{/sendEmailContact}">
+                            <div class="form-group col-md-6">
+                                <input type="text" class="form-control" id="name" name="name" 
+                                       placeholder="Your name" required>
+                            </div>
+                            <div class="form-group col-md-6">
+                                <input type="email" class="form-control" id="email" name="email" 
+                                       placeholder="Email address" required>
+                            </div>
+                            <div class="form-group col-md-12">
+                                <input type="text" class="form-control" id="subject" name="subject" 
+                                       placeholder="Subject" required>
+                            </div>
+                            <div class="form-group col-md-12">
+                                <textarea class="form-control" name="message" id="message" rows="1" placeholder="Wrtie message"></textarea>
+                            </div>
+                            <div class="form-group col-md-12">
+                                <button type="submit" value="submit" class="btn order_s_btn form-control">submit now</button>
+                            </div>
+                        </form>
+                    </div>
+                    <div class="col-lg-4 offset-md-1">
+                        <div class="contact_details">
+                            <div class="contact_d_item">
+                                <h3>Address :</h3>
+                                <p>Center Building <br /> Nguyen Huy Tuong Street, Thanh Xuan, Ha Noi</p>
+                            </div>
+                            <div class="contact_d_item">
+                                <h5>Phone : <a href="tel:01372466790">+(1800) 456 7890</a></h5>
+                                <h5>Email : <a href="mailto:onlinebookstore2002@gmail.com">onlinebookstore2002@gmail.com</a></h5>
+                            </div>
+                            <div class="contact_d_item">
+                                <h3>Opening Hours :</h3>
+                                <p>8:00 AM – 10:00 PM</p>
+                                <p>Monday – Sunday</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <!--================End Contact Form Area =================-->
+        
+        <div th:replace="headerAndFooterHomePage::footer"></div>
+    </body>
+</html>

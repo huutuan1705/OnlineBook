@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<!--
+Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
+Click nbfs://nbhost/SystemFileSystem/Templates/Other/html.html to edit this template
+-->
+<html xmlns=http://www.w3.org/1999/xhtml xmlns:th="http://www.thymeleaf.org">
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"> 
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-KK94CHFLLe+nY2dmCWGMq91rCGa5gtU4mk92HdvYe+M/SXH301p5ILy+dN9+nJOZ" crossorigin="anonymous">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.1.3/css/bootstrap.min.css">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/ionicons/2.0.1/css/ionicons.min.css">
+            
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.1.3/js/bootstrap.bundle.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ENjdO4Dr2bkBIFxQpeoTz1HIcje39Wm4jDKdf19U8gI4ddQ3GYNS7NTKfAdVQSZe" crossorigin="anonymous"></script>
+        <link rel="stylesheet" th:href="@{/adminBookDetail.css}">
+        <link rel="stylesheet" th:href="@{/adminBookDetailResponsive.css}">
+            
+    </head>
+    <body>
+        <div th:replace="HeaderAndFooter::header"></div>
+        
+        <div class="container" style="margin-top: 10px;">
+            <div class="row email-form">
+                <div class="col-sm-12">
+                    <h2 class="myclass">Confirm Order</h2>
+                    <form th:action="@{/adminBooks/sendEmail}" th:method="post">
+                        <input type="hidden" th:value="${cid}" name="cid"/>
+                        <input type="hidden" th:value="${oid}" name="oid"/>
+                        <div class="form-group">
+                            <label>To:</label> 
+                            <input type="text" class="form-control" name="to"
+                                   th:value="${customer.email}">
+                        </div>
+                        <div class="form-group">
+                            <label>Subject:</label> 
+                            <input type="text" class="form-control" name="subject"
+                                   th:value="${order.status}==0?'Xác nhận đơn hàng':' '">
+                        </div>
+                        <div class="form-group">
+                            <label for="content">Content:</label>
+                            <textarea class="form-control" rows="20" name="content" th:if="${order.status}==0">
+<th:block th:text="'Xin chào ' + ${customer.fullname}"></th:block>
+<th:block th:text="'Đơn hàng bạn đặt vào ngày ' + ${order.dateFormat} + ' đã được chúng tôi xác nhận và tiến hành giao hàng'"></th:block>
+THÔNG TIN ĐƠN HÀNG - DÀNH CHO NGƯỜI MUA
+
+Mã đơn hàng:    <th:block th:text="${order.id}"></th:block>
+Ngày đặt hàng:  <th:block th:text="${order.dateFormat}"></th:block>
+<th:block th:each="i: ${#numbers.sequence(0, amount-1)}" th:with="book=${listBooks[i]}">
+<th:block th:text="${i+1} + '. ' + ${book.value.title} + ' (' + ${book.value.author} + ')'"></th:block>
+Mã sách:        <th:block th:text="${book.value.id}"></th:block>
+Số lượng:       <th:block th:text="${book.key.quantity}"></th:block>
+Giá:                <th:block th:text="${#numbers.formatDecimal(book.value.price,3,'POINT',0,'COMMA')}"></th:block>
+</th:block>
+________________________________
+Tổng thanh toán: <th:block th:text="${#numbers.formatDecimal(order.totalMoney,3,'POINT',0,'COMMA')}"></th:block>
+                            </textarea>
+<textarea class="form-control" rows="20" name="content" th:unless="${order.status}==0">
+
+</textarea>
+                        </div>
+                        <button type="submit" class="btn btn-primary">Send</button>
+                        <button type="reset" class="btn btn-primary">Cancel</button>
+                    </form>
+                </div>
+            </div>
+	</div>
+        
+        <div th:replace="HeaderAndFooter::footer"></div>
+    </body>
+</html>

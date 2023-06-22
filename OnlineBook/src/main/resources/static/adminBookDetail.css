@@ -1,0 +1,99 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+.add-book-form{
+    display: flex;
+    margin-left: 15%;
+    margin-right: 15%;
+}
+
+.container-left{
+    margin-right: 2.5%;
+}
+
+.title-author{
+    display: flex;
+    margin-bottom: 5px;
+}
+
+.title{
+    margin-right: 3%;
+}
+
+.description {
+    margin-bottom: 5px;
+}
+
+.description textarea{
+    width: 100%;
+}
+
+.date-pages{
+    display: flex;
+    margin-bottom: 5px;
+}
+
+.date{
+    margin-right: 3%;
+}
+
+.container-right{
+    margin-right: 2.5%;
+}
+.container-right input{
+    margin-top: 24px;
+}
+
+#image_input{
+    margin-bottom: 3%;
+}
+
+#display_image{
+    border: 1px solid black;
+    height: 475px;
+    background-position: center;
+    background-size: cover;
+}
+
+.category{
+    margin-bottom: 5px;
+}
+.money input{
+    width: 100%;
+}
+
+.container form hr{
+    color: black;
+    height: 1px;
+    margin-left: 10%;
+    margin-right: 10%;
+    background-color: black;
+}
+
+.submit{
+    display: flex;
+    float: right;
+    margin-bottom: 3%;
+    margin-right: 10%;
+    width: 100px;
+}
+
+.submit-btn{
+    margin-left: 15%;
+    margin-right: 15%;
+    width: 100%;
+}
+
+.carousel {
+    margin-left: 20%;
+    margin-right: 20%;
+}
+
+.email-form{
+    width: 70%; 
+    margin: 0 auto; 
+    padding: 20px;
+}

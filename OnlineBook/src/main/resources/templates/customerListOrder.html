@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<!--
+Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
+Click nbfs://nbhost/SystemFileSystem/Templates/Other/html.html to edit this template
+-->
+<html xmlns=http://www.w3.org/1999/xhtml xmlns:th="http://www.thymeleaf.org">
+    <head>
+        <title>TODO supply a title</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+            
+        <script src="https://kit.fontawesome.com/279cd13ff5.js" crossorigin="anonymous"></script>
+        
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css" integrity="sha384-xOolHFLEh07PJGoPkLv1IbcEPTNtaed2xpHsD9ESMhqIYd0nLMwNLD69Npy4HI+N" crossorigin="anonymous">
+        <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+        <script src="https://cdn.jsdelivr.net/npm/popper.js@1.12.9/dist/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+        <script src="https://code.jquery.com/jquery-3.7.0.min.js" integrity="sha256-2Pmvv0kuTBOenSvLm6bvfBSSHrUJ+3A7x6P5Ebd07/g=" crossorigin="anonymous"></script>
+
+        <link rel="stylesheet" th:href="@{/style.css}">
+        <link rel="stylesheet" th:href="@{/responsive.css}">
+    </head>
+    <body>
+        <div th:replace="headerAndFooterHomePage::header"></div>
+        
+        <!--================Main Header Area =================-->
+        <section class="banner_area">
+            <div class="container">
+                <div class="banner_text">
+                    <h3>My Order</h3>
+                </div>
+            </div>
+        </section>
+        <!--================End Main Header Area =================-->
+        
+        <section class="cart_table_area p_100">
+            <div class="container">
+                <div class="table-responsive">
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th scope="col" class="text-center" style="width:10%">ID</th>
+                                <th scope="col" class="text-center" style="width:15%">Order Date</th>
+                                <th scope="col" class="text-center">Total Money</th>
+                                <th scope="col" class="text-center">Status</th>
+                                <th scope="col" class="text-center" style="width:30%">Action</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            
+                            <tr th:each="order: ${orders}">
+                                <td th:text="${order.id}" class="text-center"></td>
+                                <td th:text="${order.date}" class="text-center"></td>
+                                <td th:text="${#numbers.formatDecimal(order.totalMoney,3,'POINT',0,'COMMA')}"
+                                    class="text-center"></td>
+                                <td th:if="${order.status}==0" class="text-center">
+                                    Chờ xác nhận
+                                </td>
+                                <td th:if="${order.status}==1" class="text-center">
+                                    Ðang giao hàng
+                                </td>
+                                <td th:if="${order.status}==2" class="text-center">
+                                    Đã nhận hàng
+                                </td>
+                                <td style="display: flex" th:if="${order.status}==0">
+                                    <a class="pest_btn" th:href="@{/orderDetail/{oid}(oid=${order.id})}" style="margin-right: 2px">Detail Order</a>
+                                    <form th:method="post" id="deleteOrderForm" 
+                                          th:action="@{/deleteOrder/{id}(id=${order.id})}">
+                                        <input type="button" class="btn pest_btn" value="Cancel Order"
+                                               data-toggle="modal" data-target="#deleteOrder">
+                                    </form>
+                                </td>
+                                
+                                <td style="display: flex" th:unless="${order.status}==0">
+                                    <a class="pest_btn" th:href="@{/orderDetail/{oid}(oid=${order.id})}" style="margin-right: 2px">Detail Order</a>
+                                    <input type="button" class="btn pest_btn" value="Cancel Order"
+                                               data-toggle="modal" data-target="#cannotDelete">
+                                </td>
+                            </tr>
+                            <tr>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td>
+                                    <a class="pest_btn" th:href="@{/allBooks}">Order More</a>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </section>
+        
+        <div th:replace="headerAndFooterHomePage::footer"></div>
+        
+        <div class="modal fade" id="deleteOrder" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+            aria-hidden="true">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLabel">Cancel Order</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <p>Are you sure you want to cancel this order???</p>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                        <button type="submit" class="btn btn-primary" id="deleteOrderBtn">Cancel order</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="modal fade" id="cannotDelete" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+            aria-hidden="true">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLabel">Cancel Order</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <p>The order has been confirmed, you cannot delete it!!!</p>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <script type="text/javascript">
+            $('#myModal').on('shown.bs.modal', function () {
+                $('#myInput').trigger('focus')
+            })
+            $(document).ready(function() {
+                $('#deleteOrderBtn').click(function() {
+                    $('#deleteOrderForm').submit();
+                });
+            });
+        </script>
+    </body>
+</html>

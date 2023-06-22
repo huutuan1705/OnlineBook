@@ -1,0 +1,16 @@
+/*
+Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
+Click nbfs://nbhost/SystemFileSystem/Templates/Other/CascadeStyleSheet.css to edit this template
+*/
+/* 
+    Created on : May 18, 2023, 10:09:41 PM
+    Author     : huutuan
+*/
+*{
+    padding: 0;
+    margin: 0;
+}
+li .action a.active{
+    background-color: #0D6EFD;
+    color: white;
+}

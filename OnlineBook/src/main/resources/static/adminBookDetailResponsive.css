@@ -1,0 +1,49 @@
+/* PC */
+@media (max-width: 1024px) {
+
+}
+
+/* Mobile */
+@media (max-width: 739px){
+    .res-add-book-form{
+        display: inline;
+        width: 100% !important;
+    }
+    .container-left{
+        margin-right:0;
+    }
+    .container-right{
+        margin-right: 0;
+    }
+    .res-title-author{
+        display: inline;
+        width: 100% !important;
+    }
+    .title{
+        margin-right:0;
+    }
+
+    .res-date-pages{
+        display: inline;
+        width: 100% !important;
+    }
+
+    .date{
+        margin-right: 0;
+    }
+
+    .email-form{
+        width: 100% !important;
+    }
+
+    .container form hr{
+        margin-left: 0;
+        margin-right: 0;
+    }
+
+    .submit{
+        width: 100%;
+        float: none;
+        margin-right:0;
+    }
+}
